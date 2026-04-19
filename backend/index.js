@@ -52,7 +52,7 @@ app.post('/api/grade', async (req, res) => {
 
   try {
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-3.1-flash',
       systemInstruction: `You are an expert high school teacher. Evaluate the student submission against the assignment prompt. The max score is ${max_points}. Provide warm, constructive feedback and a calculated score. Return ONLY a valid JSON object matching this schema: {"score": number, "feedback": "string"}.`,
     });
 
