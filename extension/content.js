@@ -181,7 +181,12 @@ async function handleGradeClick() {
     });
 
     const gradeData = await gradeRes.json();
-    if (gradeData.error) throw new Error(gradeData.error);
+
+    if (gradeData.error) {
+      const err = new Error(gradeData.error);
+      err.details = gradeData.details; // Preserve the detailed error message
+      throw err;
+    }
 
     // 3. UI Update (Smart Update)
     const gradeInput = document.querySelector('input[aria-label*="Grade"]') || document.getElementById('grading-box-extended');

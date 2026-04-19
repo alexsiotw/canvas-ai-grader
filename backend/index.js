@@ -22,6 +22,15 @@ if (!apiKey) {
 
 const genAI = new GoogleGenerativeAI(apiKey);
 
+// Health Check
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'online',
+    apiKeyConfigured: !!process.env.GEMINI_API_KEY,
+    nodeEnv: process.env.NODE_ENV
+  });
+});
+
 app.post('/api/grade', async (req, res) => {
   const { assignment_prompt, max_points, student_submission } = req.body;
 
