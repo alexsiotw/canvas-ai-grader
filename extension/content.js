@@ -209,7 +209,8 @@ async function handleGradeClick() {
 
   } catch (error) {
     console.error('[AI Grader] Grading failed:', error);
-    alert('AI Grading failed: ' + error.message);
+    const errorMessage = error.details ? `AI Grading failed: ${error.message}\n\nDetails: ${error.details}` : `AI Grading failed: ${error.message}`;
+    alert(errorMessage);
     button.innerHTML = '❌ Failed';
     button.disabled = false;
   }
