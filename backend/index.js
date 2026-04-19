@@ -18,8 +18,17 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 app.post('/api/grade', async (req, res) => {
   const { assignment_prompt, max_points, student_submission } = req.body;
 
-  if (!assignment_prompt || !max_points || !student_submission) {
-    return res.status(400).json({ error: 'Missing required fields' });
+  // Robust validation: Allow 0 for max_points
+  const missingFields = [];
+  if (assignment_prompt === undefined || assignment_prompt === null) missingFields.push('assignment_prompt');
+  if (max_points === undefined || max_points === null) missingFields.push('max_points');
+  if (student_submission === undefined || student_submission === null) missingFields.push('student_submission');
+
+  if (missingFields.length > 0) {
+    return res.status(400).json({ 
+      error: 'Missing required fields', 
+      details: `The following fields are missing or null: ${missingFields.join(', ')}` 
+    });
   }
 
   try {
